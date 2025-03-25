@@ -1,0 +1,67 @@
+name: Acme
+
+on:
+    schedule:
+        - cron: '0 0 * */3 *'
+    workflow_dispatch:
+
+jobs:
+    issue-certificate:
+        name: Issue certificate
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Issue certificate
+              uses: Menci/acme@main
+              with:
+                account-tar: ${{ secrets.ACCOUNT_TAR }}
+                domains: ${{ secrets.DOMAIN }}
+                append-wildcard: true
+                arguments: --dns dns_dp
+                uninstall: false
+
+            - name: Write certificate
+              run: |
+                mkdir -p certificates
+                $HOME/.acme.sh/acme.sh --install-cert \
+                -d ${{ secrets.DOMAIN }} \
+                --cert-file certificates/cert.pem \
+                --fullchain-file certificates/fullchain.pem \
+                --key-file certificates/privkey.pem \
+                --ca-file certificates/ca.pem
+            - name: Deploy to Aliyun
+              uses: nyaruta/deploy-certificate-to-aliyun@main
+              with:
+                access-key-id: ${{ secrets.ALIYUN_ACCESS_KEY_ID }}
+                access-key-secret: ${{ secrets.ALIYUN_ACCESS_KEY_SECRET }}
+                fullchain-file: certificates/fullchain.pem
+                key-file: certificates/privkey.pem
+                certificate-name: ${{ secrets.DOMAIN }}
+              
+            - name: Deploy to TencentCloud
+              uses: renbaoshuo/deploy-certificate-to-tencentcloud@master
+              with:
+                secret-id: ${{ secrets.TENCENT_SECRET_ID }}
+                secret-key: ${{ secrets.TENCENT_SECRET_KEY }}
+                fullchain-file: certificates/fullchain.pem
+                key-file: certificates/privkey.pem
+                cdn-domains: ${{ secrets.CDN_DOMAINS }}
+
+            - name:  Deploy to Netlify
+              run: scripts/deploy-netlify.sh
+              env:
+                SITE_IDS: ${{ secrets.NETLIFY_SITE_ID }}
+                ACCESS_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+                CERT_FILE_PATH: certificates/cert.pem
+                KEY_FILE_PATH: certificates/privkey.pem
+                CA_FILE_PATH: certificates/ca.pem
+
+            
+            - name: Clean up
+              run: |
+                echo "Cleaning up..."
+                rm -rf certificates
+                $HOME/.acme.sh/acme.sh --uninstall
+                rm -rf ~/.acme.sh
