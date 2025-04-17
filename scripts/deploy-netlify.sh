@@ -5,16 +5,6 @@
 # https://docs.netlify.com/api/get-started/#authentication
 # https://open-api.netlify.com/#tag/sniCertificate
 
-# This deployment required following variables
-# export Netlify_ACCESS_TOKEN="Your Netlify Access Token"
-# export Netlify_SITE_ID="Your Netlify Site ID"
-# export CERT_FILE_PATH="/path/to/certificate.crt"
-# export KEY_FILE_PATH="/path/to/private.key"
-# export CA_FILE_PATH="/path/to/ca.crt"
-
-# If have more than one SITE ID
-# export Netlify_SITE_ID="SITE_ID_1 SITE_ID_2"
-
 # returns 0 means success, otherwise error.
 
 ########  Public functions #####################

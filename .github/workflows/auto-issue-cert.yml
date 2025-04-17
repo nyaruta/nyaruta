@@ -2,7 +2,7 @@ name: Acme
 
 on:
     schedule:
-        - cron: '0 0 * */3 *'
+        - cron: '0 0 1 */3 *'
     workflow_dispatch:
 
 jobs:
@@ -31,6 +31,7 @@ jobs:
                 --fullchain-file certificates/fullchain.pem \
                 --key-file certificates/privkey.pem \
                 --ca-file certificates/ca.pem
+
             - name: Deploy to Aliyun
               uses: nyaruta/deploy-certificate-to-aliyun@main
               with:
@@ -49,8 +50,8 @@ jobs:
                 key-file: certificates/privkey.pem
                 cdn-domains: ${{ secrets.CDN_DOMAINS }}
 
-            - name:  Deploy to Netlify
-              run: scripts/deploy-netlify.sh
+            - name: Deploy to Netlify
+              run: bash scripts/deploy-netlify.sh
               env:
                 SITE_IDS: ${{ secrets.NETLIFY_SITE_ID }}
                 ACCESS_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
