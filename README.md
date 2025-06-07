@@ -4,9 +4,4 @@
 | [![nyaruta's GitHub stats](https://github-readme-stats.vercel.app/api?username=nyaruta&show_icons=true&theme=buefy)](https://github.com/anuraghazra/github-readme-stats) | [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=nyaruta&layout=compact&theme=buefy&hide_border=true)](https://github.com/anuraghazra/github-readme-stats) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 
------
-### :sparkling_heart: Donate
- - [Afdian](https://afdian.net/@nyaruta)
------
-
 ![count](https://count.getloli.com/get/@nyaruta?theme=moebooru)
