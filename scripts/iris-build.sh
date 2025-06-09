@@ -22,4 +22,6 @@ cat > config.json <<EOF
 EOF
 
 # Build the Iris project
+pnpm --filter @photo-gallery/web build:manifest
+
 pnpm run build
