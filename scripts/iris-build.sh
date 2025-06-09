@@ -1,4 +1,4 @@
-touch builder.config.json
+rm builder.config.json && touch builder.config.json
 
 cat > config.json <<EOF
 {
