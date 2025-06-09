@@ -1,14 +1,4 @@
-cat > builder.config.json <<EOF
-{
-  "provider": "github",
-  "github": {
-    "owner": env.OWNER,
-    "repo": env.REPO,
-    "token": env.GH_TOKEN,
-    "useRawUrl": true
-  }
-}
-EOF
+touch builder.config.json
 
 cat > config.json <<EOF
 {
@@ -24,9 +14,6 @@ cat > config.json <<EOF
   "author": {
     "name": "CTO",
     "url": "https://chitang.org"
-  },
-  "social": {
-    "twitter": "@nyaaruta"
   },
   "extra": {
     "accessRepo":false
