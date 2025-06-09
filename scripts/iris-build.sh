@@ -1,4 +1,15 @@
-rm builder.config.json && touch builder.config.json
+echo "[+] Removing configs"
+rm builder.config.json config.json
+
+echo "[+] Writing configs"
+cat > builder.config.json <<EOF
+{
+  "repo": {
+    "enable": false,
+    "url": ""
+  }
+}
+EOF
 
 cat > config.json <<EOF
 {
@@ -21,7 +32,7 @@ cat > config.json <<EOF
 }
 EOF
 
-# Build the Iris project
+echo "[+] Updaing manifest"
 pnpm --filter @photo-gallery/web build:manifest
-
+echo "[+] Starting build"
 pnpm run build
